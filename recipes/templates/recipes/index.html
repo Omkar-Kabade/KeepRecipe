@@ -1,0 +1,51 @@
+{% extends 'recipes/base.html' %}
+{% load static %}
+{% block title %}TRCBK-Food Blogs | Recent Recipes{% endblock  %}
+
+{% block content %}
+
+<div class="container py-3">
+    <h2 class="text-center">Recent Recipes</h2>
+    <div class="row py-5">
+        <div class="col-sm-8">
+            {% for recipe in recipes %}
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <a class="text-dark" href="{% url "recipe-details" recipe.slug %}"><img src={{recipe.food_image.url}} class="h-100 img-fluid rounded-start" style = "object-fit:cover" alt="Food Image"/></a>
+                    </div>
+                    <div class="col-md-8">
+                            <div class="card-body">
+                            <h5 class="card-title"><a class="text-dark" href="{% url "recipe-details" recipe.slug %}">{{recipe.title}}</a></h5>
+                            <h6 class="card-title"><small class="text-muted">Chef : {{recipe.chef.title}}</small></h6>
+                            <p class="card-text"><small class="text-muted">Ingrediants : {{recipe.ingrediants}}</small></p>
+                            <p class="card-text"><small class="text-muted">Ratings - {{recipe.rating}}</small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="col-sm-4">
+            <h4 class="mb-3">Recent Updates</h4>
+            <div class="card text-dark bg-light mb-3" style="max-width: 18rem;">
+                <div class="card-header">Total Recipes</div>
+                <div class="card-body">
+                  <h5 class="card-title">{{total_recipe}} Recipe(s)</h5>
+                  <p class="card-text">We have recieved few more recipes for our blog and we are in the process of posting them here.So be patient</p>
+                </div>
+            </div>
+            <div class="card text-dark bg-light mb-3" style="max-width: 18rem;">
+                <div class="card-header">Total Average Ratings</div>
+                <div class="card-body">
+                  <h5 class="card-title">{{avg_rating.rating__avg}} </h5>
+                  <p class="card-text">We have been recieving immense love from your side for our dishes, keep loving us. we bring more such recipes for you!</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{% endblock  %}

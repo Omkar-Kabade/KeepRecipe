@@ -1,0 +1,34 @@
+{% extends 'recipes/base.html' %}
+{% load static %}
+{% block title %}TRCBK-Food Blogs | All Recipes{% endblock  %}
+
+{% block content %}
+
+<div class="container py-3">
+    <h2 class="text-center">All Recipes</h2>
+    <div class="row py-5">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8 ">
+            {% for recipe in recipes %}
+            <div class="card mb-3 mx-auto" style="max-width: 540px;">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <a class="text-dark" href="{% url "recipe-details" recipe.slug %}"><img src={{recipe.food_image.url}} class="h-100 img-fluid rounded-start" style = "object-fit:cover" alt="Food Image"/></a>
+                    </div>
+                    <div class="col-md-8">
+                            <div class="card-body">
+                            <h5 class="card-title"><a class="text-dark" href="{% url "recipe-details" recipe.slug %}">{{recipe.title}}</a></h5>
+                            <h6 class="card-title"><small class="text-muted">Chef : {{recipe.chef.title}}</small></h6>
+                            <p class="card-text"><small class="text-muted">Ingrediants : {{recipe.ingrediants}}</small></p>
+                            <p class="card-text"><small class="text-muted">Ratings - {{recipe.rating}}</small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="col-sm-2"></div>
+    </div>
+
+</div>
+{% endblock  %}

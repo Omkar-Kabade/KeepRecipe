@@ -1,0 +1,29 @@
+{% extends 'recipes/base.html' %}
+{% load static %}
+{% block title %}TRCBK-Food Blogs | Pinned Recipes{% endblock  %}
+
+{% block content %}
+
+<div class="container py-3">
+    <h2 class="text-center">Pinned Recipes</h2>
+    <div class="row py-5">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8  ">
+            <div class="pinned">
+                {% if not has_pins %}
+                    <h2 class="text-center text-danger">No Recipes Pinned</h2>
+                {% endif %}
+                <ul>
+                    {% for recipe in pinned_recipe  %}
+                        <li>
+                            <a href="{% url 'recipe-details' recipe.slug %}">{{recipe.title}}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-2"></div>
+    </div>
+
+</div>
+{% endblock  %}

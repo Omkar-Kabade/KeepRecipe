@@ -1,0 +1,85 @@
+{% extends 'recipes/base.html' %}
+{% load static %}
+{% block title %}TRCBK-Food Blogs | Recipe Details{% endblock  %}
+
+{% block content %}
+
+    <div class="container py-3">
+        <h2 class="text-center">Recipe Details</h2>
+        <div class="recipe-card card my-5">
+            <div class="row ">
+                <div class="col-md-4">
+                    <div class="recipe-image position-relative h-100">
+                        <img src={{recipe.food_image.url}} class="h-100 img-fluid rounded-start" style = "object-fit:cover" alt="Food Image"/>
+                        <div class="d-flex flex-row position-absolute top-0">
+                            {% for tag in tags  %}
+                                <p class="mb-0 mx-2 tag">{{tag.food_type}}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="recipe-details py-3 position-relative">
+                        <h4>{{recipe.title}}</h4>
+                        <div>
+                            <label for=""><strong>Ingrediants: </strong></label>
+                            <p><small>{{recipe.ingrediants }}</small></p>
+                        </div>
+                        <div>
+                            <label for=""><strong>Process: </strong></label>
+                            <p>
+                                
+                                {{recipe.process | linebreaks}} </p>
+                        </div>
+                        <form action="{% url 'pinned-recipes' %}" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="recipe_id" value="{{recipe.id}}">
+                                <button style="border-top-right-radius:6px;" class="pining bg-dark text-light position-absolute top-0 end-0 rounded-20">
+                                    {% if pinned %}
+                                        Unpin Recipe
+                                    {% else %}
+                                        Pin Recipe
+                                    {% endif %}
+                                </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <h4>Add A Comments</h4>
+                <form action="{% url "recipe-details" recipe.slug %}" class="form-control comments_form" method = "POST">
+                    {% csrf_token %}
+                    {% for field in commentForm %}
+
+                        <div class="form-fields">
+                            {{field.label_tag}}
+                            {{field}}
+                            {{field.errors}}
+                        </div>
+
+                    {% endfor %}
+
+                    <button>Submit</button>
+                </form>
+            </div>
+            <div class="col-sm-6 ">
+                <h4>All Comments</h4>
+                <div class="comment-box">
+                    {% for comment in comments  %}
+                        <div class="card p-3 mb-2">
+                            <div>
+                                <p class="card-title mb-0 fw-bold "><i>{{comment.user_name}}</i></p>
+                            </div>
+                            <div>
+                                <p class="card-body py-1 mb-0">{{comment.comment}}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock  %}
